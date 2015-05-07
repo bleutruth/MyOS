@@ -1,4 +1,9 @@
 setlocal
-set QEMU_PATH=..\Local\tolset\z_tools\qemu
-%QEMU_PATH%\qemu.exe -L %QEMU_PATH% -m 32 -localtime -std-vga -fda MyOS.img
+set TOLSET_PATH=..\Local\tolset
+set NASK=%TOLSET_PATH%\z_tools\nask.exe
+set QEMU_PATH=%TOLSET_PATH%\z_tools\qemu
+set QEMU=%QEMU_PATH%\qemu.exe
+set FILE_IMG=MyOS.img
+%NASK% MyOS.nas %FILE_IMG%
+%QEMU% -L %QEMU_PATH% -m 32 -localtime -std-vga -fda %FILE_IMG%
 endlocal
