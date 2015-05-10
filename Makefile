@@ -9,24 +9,26 @@ DEL      = rm -rf
 QEMU_PATH:=$(TOOLPATH)qemu
 QEMU:=$(QEMU_PATH)/qemu.exe
 
-# ƒfƒtƒHƒ‹ƒg“®ì
+# ï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½ï¿½ï¿½ï¿½
 
 default :
 	$(MAKE) img
 
-# ƒtƒ@ƒCƒ‹¶¬‹K‘¥
+# ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Kï¿½ï¿½
 
 ipl.bin : ipl.nas Makefile
 	$(NASK) ipl.nas ipl.bin ipl.lst
 
-MyOS.img : ipl.bin Makefile
-	$(EDIMG)   imgin:../Local/tolset/z_tools/fdimg0at.tek \
-		wbinimg src:ipl.bin len:512 from:0 to:0   imgout:MyOS.img
+MyOS.sys : MyOS.nas Makefile
+	$(NASK) MyOS.nas MyOS.sys MyOS.lst
 
-# ƒRƒ}ƒ“ƒh
+MyOS.img : ipl.bin MyOS.sys Makefile
+	$(EDIMG)   imgin:$(TOOLPATH)fdimg0at.tek \
+		wbinimg src:ipl.bin len:512 from:0 to:0 \
+		copy from:MyOS.sys to:@: \
+		imgout:MyOS.img
 
-asm :
-	$(MAKE) ipl.bin
+# ï¿½Rï¿½}ï¿½ï¿½ï¿½h
 
 img :
 	$(MAKE) MyOS.img
@@ -42,6 +44,8 @@ install :
 clean :
 	$(DEL) ipl.bin
 	$(DEL) ipl.lst
+	$(DEL) MyOS.sys
+	$(DEL) MyOS.lst
 
 src_only :
 	$(MAKE) clean
