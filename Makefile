@@ -1,6 +1,12 @@
 TOOLPATH = ../Local/tolset/z_tools/
+INCPATH  = ../Local/tolset/z_tools/haribote/
 MAKE     = $(TOOLPATH)make.exe -r
 NASK     = $(TOOLPATH)nask.exe
+CC1      = $(TOOLPATH)cc1.exe -I$(INCPATH) -Os -Wall -quiet
+GAS2NASK = $(TOOLPATH)gas2nask.exe -a
+OBJ2BIM  = $(TOOLPATH)obj2bim.exe
+BIM2HRB  = $(TOOLPATH)bim2hrb.exe
+RULEFILE = MyOS.rul
 EDIMG    = $(TOOLPATH)edimg.exe
 IMGTOL   = $(TOOLPATH)imgtol.com
 COPY     = cp -rfu
@@ -19,8 +25,28 @@ default :
 ipl.bin : ipl.nas Makefile
 	$(NASK) ipl.nas ipl.bin ipl.lst
 
-MyOS.sys : asmhead.nas Makefile
-	$(NASK) asmhead.nas MyOS.sys asmhead.lst
+asmhead.bin : asmhead.nas Makefile
+	$(NASK) asmhead.nas asmhead.bin asmhead.lst
+
+bootpack.gas : bootpack.c Makefile
+	$(CC1) -o bootpack.gas bootpack.c
+
+bootpack.nas : bootpack.gas Makefile
+	$(GAS2NASK) bootpack.gas bootpack.nas
+
+bootpack.obj : bootpack.nas Makefile
+	$(NASK) bootpack.nas bootpack.obj bootpack.lst
+
+bootpack.bim : bootpack.obj Makefile
+	$(OBJ2BIM) @$(RULEFILE) out:bootpack.bim stack:3136k map:bootpack.map \
+		bootpack.obj
+# 3MB+64KB=3136KB
+
+bootpack.hrb : bootpack.bim Makefile
+	$(BIM2HRB) bootpack.bim bootpack.hrb 0
+
+MyOS.sys : asmhead.bin bootpack.hrb Makefile
+	cat asmhead.bin bootpack.hrb > MyOS.sys
 
 MyOS.img : ipl.bin MyOS.sys Makefile
 	$(EDIMG)   imgin:$(TOOLPATH)fdimg0at.tek \
@@ -42,10 +68,15 @@ install :
 	$(IMGTOL) w a: MyOS.img
 
 clean :
-	$(DEL) ipl.bin
-	$(DEL) ipl.lst
+	$(DEL) *.bin
+	$(DEL) *.lst
+	$(DEL) *.gas
+	$(DEL) *.obj
+	$(DEL) bootpack.nas
+	$(DEL) bootpack.map
+	$(DEL) bootpack.bim
+	$(DEL) bootpack.hrb
 	$(DEL) MyOS.sys
-	$(DEL) asmhead.lst
 
 src_only :
 	$(MAKE) clean
