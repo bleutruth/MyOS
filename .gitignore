@@ -1,5 +1,10 @@
-MyOS.img
-MyOS.sys
-MyOS.lst
-ipl.bin
-ipl.lst
+/src/*.bim
+/src/*.bin
+/src/*.gas
+/src/*.hrb
+/src/*.lst
+/src/*.map
+/src/*.obj
+/src/bootpack.nas
+/src/MyOS.img
+/src/MyOS.sys
