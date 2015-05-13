@@ -1,5 +1,5 @@
-TOOLPATH = ../Local/tolset/z_tools/
-INCPATH  = ../Local/tolset/z_tools/haribote/
+TOOLPATH = ../../Local/tolset/z_tools/
+INCPATH  = $(TOOLPATH)haribote/
 MAKE     = $(TOOLPATH)make.exe -r
 NASK     = $(TOOLPATH)nask.exe
 CC1      = $(TOOLPATH)cc1.exe -I$(INCPATH) -Os -Wall -quiet
