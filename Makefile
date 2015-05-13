@@ -9,18 +9,18 @@ DEL      = rm -rf
 QEMU_PATH:=$(TOOLPATH)qemu
 QEMU:=$(QEMU_PATH)/qemu.exe
 
-# ï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½ï¿½ï¿½ï¿½
+# ƒfƒtƒHƒ‹ƒg“®ì
 
 default :
 	$(MAKE) img
 
-# ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Kï¿½ï¿½
+# ƒtƒ@ƒCƒ‹¶¬‹K‘¥
 
 ipl.bin : ipl.nas Makefile
 	$(NASK) ipl.nas ipl.bin ipl.lst
 
-MyOS.sys : MyOS.nas Makefile
-	$(NASK) MyOS.nas MyOS.sys MyOS.lst
+MyOS.sys : asmhead.nas Makefile
+	$(NASK) asmhead.nas MyOS.sys asmhead.lst
 
 MyOS.img : ipl.bin MyOS.sys Makefile
 	$(EDIMG)   imgin:$(TOOLPATH)fdimg0at.tek \
@@ -28,7 +28,7 @@ MyOS.img : ipl.bin MyOS.sys Makefile
 		copy from:MyOS.sys to:@: \
 		imgout:MyOS.img
 
-# ï¿½Rï¿½}ï¿½ï¿½ï¿½h
+# ƒRƒ}ƒ“ƒh
 
 img :
 	$(MAKE) MyOS.img
@@ -45,7 +45,7 @@ clean :
 	$(DEL) ipl.bin
 	$(DEL) ipl.lst
 	$(DEL) MyOS.sys
-	$(DEL) MyOS.lst
+	$(DEL) asmhead.lst
 
 src_only :
 	$(MAKE) clean
