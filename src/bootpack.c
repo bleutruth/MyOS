@@ -1,8 +1,11 @@
+
+void io_hlt(void);
+
 void HariMain(void)
 {
 
 fin:
-	/* ここにHLTを入れたいのだが、C言語ではHLTが使えない！ */
+	io_hlt(); /* これでnaskfunc.nasの_io_hltが実行されます */
 	goto fin;
 
 }

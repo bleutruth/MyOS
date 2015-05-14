@@ -1,5 +1,6 @@
 TOOLPATH = ../../Local/tolset/z_tools/
 INCPATH  = $(TOOLPATH)haribote/
+
 MAKE     = $(TOOLPATH)make.exe -r
 NASK     = $(TOOLPATH)nask.exe
 CC1      = $(TOOLPATH)cc1.exe -I$(INCPATH) -Os -Wall -quiet
@@ -37,9 +38,12 @@ bootpack.nas : bootpack.gas Makefile
 bootpack.obj : bootpack.nas Makefile
 	$(NASK) bootpack.nas bootpack.obj bootpack.lst
 
-bootpack.bim : bootpack.obj Makefile
+myosfunc.obj : myosfunc.nas Makefile
+	$(NASK) myosfunc.nas myosfunc.obj myosfunc.lst
+
+bootpack.bim : bootpack.obj myosfunc.obj Makefile
 	$(OBJ2BIM) @$(RULEFILE) out:bootpack.bim stack:3136k map:bootpack.map \
-		bootpack.obj
+		bootpack.obj myosfunc.obj
 # 3MB+64KB=3136KB
 
 bootpack.hrb : bootpack.bim Makefile
