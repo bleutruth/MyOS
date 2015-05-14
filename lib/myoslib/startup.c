@@ -1,10 +1,10 @@
-void HariMain(void);
+void MyOSMain(void);
 
-void HariStartup(void)
+void MyOSStartup(void)
 {
 	/* 将来HariMainの実行に先立って何かしたくなったら、ここに書き足す */
 
-	HariMain();
+	MyOSMain();
 
 	/* 将来HariMainの終了後に何か処理をさせたくなったら、ここに書き足す */
 
