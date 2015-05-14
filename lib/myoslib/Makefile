@@ -1,10 +1,10 @@
 # ÉâÉCÉuÉâÉäê∂ê¨ópMakefile
 
-TARGET   = harilibc.lib
+TARGET   = myoslib.lib
 OBJS     = startup.obj
 
-TOOLPATH = ../z_tools/
-INCPATH  = ../z_tools/haribote/
+TOOLPATH = ../../../Local/tolset/z_tools/
+INCPATH  = $(TOOLPATH)haribote/
 
 SJISCONV = $(TOOLPATH)sjisconv.exe -s
 CC1      = $(TOOLPATH)cc1.exe -I$(INCPATH) -Os -Wall -quiet
@@ -12,7 +12,7 @@ GAS2NASK = $(TOOLPATH)gas2nask.exe -a
 NASK     = $(TOOLPATH)nask.exe
 GOLIB    = $(TOOLPATH)golib00.exe
 MAKE     = $(TOOLPATH)make.exe -r
-DELE     = del
+DELE     = rm -rf
 
 ALL :
 	$(MAKE) $(TARGET)
@@ -33,8 +33,8 @@ $(TARGET) : $(OBJS) Makefile
 	$(GOLIB) out:$(TARGET) $(OBJS)
 
 clean :
-	-$(DELE) *.obj
+	$(DELE) *.obj
 
 src_only :
 	$(MAKE) clean
-	-$(DELE) $(TARGET)
+	$(DELE) $(TARGET)
