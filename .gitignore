@@ -1,11 +1,9 @@
 src/*.bim
 src/*.bin
-src/*.gas
 src/*.hrb
 src/*.lst
 src/*.map
 src/*.obj
-src/bootpack.nas
 src/MyOS.img
 src/MyOS.sys
 lib/myoslib/startup.obj
