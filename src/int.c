@@ -23,3 +23,25 @@ void init_pic(void)
 
 	return;
 }
+
+void inthandler21(int *esp)
+/* PS/2キーボードからの割り込み */
+{
+	struct BOOTINFO *binfo = (struct BOOTINFO *) ADR_BOOTINFO;
+	boxfill8(binfo->vram, binfo->scrnx, COL8_000000, 0, 0, 32 * 8 - 1, 15);
+	putfonts8_asc(binfo->vram, binfo->scrnx, 0, 0, COL8_FFFFFF, "INT 21 (IRQ-1) : PS/2 keyboard");
+	for (;;) {
+		io_hlt();
+	}
+}
+
+void inthandler2c(int *esp)
+/* PS/2マウスからの割り込み */
+{
+	struct BOOTINFO *binfo = (struct BOOTINFO *) ADR_BOOTINFO;
+	boxfill8(binfo->vram, binfo->scrnx, COL8_000000, 0, 0, 32 * 8 - 1, 15);
+	putfonts8_asc(binfo->vram, binfo->scrnx, 0, 0, COL8_FFFFFF, "INT 2C (IRQ-12) : PS/2 mouse");
+	for (;;) {
+		io_hlt();
+	}
+}
