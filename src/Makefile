@@ -1,4 +1,5 @@
-OBJS_BOOTPACK = bootpack.obj myosfunc.obj hankaku.obj graphic.obj dsctbl.obj
+OBJS_BOOTPACK = bootpack.obj myosfunc.obj hankaku.obj graphic.obj dsctbl.obj \
+		int.obj
 
 TOOLPATH = ../../Local/tolset/z_tools/
 INCPATH  = $(TOOLPATH)haribote/
